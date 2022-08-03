@@ -65,25 +65,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_half_margin"
+            android:contentDescription="@string/cd_favorite_icon"
             android:background="?android:selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:contentDescription="@string/cd_favorite_icon"
             android:focusable="true"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/btOpenLink"
             app:layout_constraintEnd_toStartOf="@+id/ivShare"
             app:layout_constraintTop_toTopOf="@+id/btOpenLink"
             app:srcCompat="@drawable/ic_favorite" />
-        <!-- Referência: Incluir o Efeito de Ripple (https://stackoverflow.com/a/61012286/3072570) -->
+        <!-- Referencias: Incluir o Efeito de Ripple (https://stackoverflow.com/a/61012286/3072570) -->
+
+
 
         <ImageView
             android:id="@+id/ivShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_half_margin"
+            android:contentDescription="@string/cd_share_icon"
             android:background="?android:selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:contentDescription="@string/cd_share_icon"
             android:focusable="true"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/btOpenLink"
