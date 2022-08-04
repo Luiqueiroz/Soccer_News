@@ -7,24 +7,49 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dio.soccernews.data.remote.SoccerNewsApi;
 import me.dio.soccernews.domain.News;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsViewModel extends ViewModel {
 
-    private final MutableLiveData<List<News>> News;
+    private final MutableLiveData<List<News>> News = new MutableLiveData<>();
+    private final   SoccerNewsApi api;
+
 
     public NewsViewModel() {
-        this.News = new MutableLiveData<>();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://luiqueiroz.github.io/Soccer-news--api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+         api = retrofit.create(SoccerNewsApi.class);
+        this.findNews();
 
-        // TODO REMOVER MOCK DE NOTÍCIAS
-        List<News> News = new ArrayList<>();
-        News.add(new News("Ferroviário tem desfalque importante", "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters"));
-        News.add(new News("Ferrinha joga no sábado", "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\""));
-        News.add(new News("copa do mundo feminina está terminando", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"));
+    }
 
-        this.News.setValue(News);
+    private void findNews() {
+        api.getNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+           if (response.isSuccessful()) {
+               News.setValue(response.body());
+           } else {
+               //TODO pensar numa estratégia de tratamento de erro.
 
+                 }
+            }
+
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                //TODO pensar numa estratégia de tratamento de erro.
+
+            }
+        });
     }
 
     public LiveData<List<News>> getNews() {
